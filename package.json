@@ -17,5 +17,8 @@
     "fs": "^0.0.1-security",
     "mocha": "^10.8.2",
     "nyc": "^17.1.0"
+  },
+  "devDependencies": {
+    "sinon": "^19.0.2"
   }
 }
