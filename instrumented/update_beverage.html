@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="./css/styles.css" />
+        <title>Update Beverage</title>
+    </head>
+    <body>
+        <header>
+            <h1 class="logo">Fizzies - Update Beverage</h1>
+            <button class="back-btn" onclick="goBack()">Back</button>
+        </header>
+
+        <div class="container">
+            <form>
+                <!-- Name Field -->
+                <div class="form-group">
+                    <label for="editName">Name</label>
+                    <input
+                        type="text"
+                        id="editName"
+                        placeholder="Enter beverage name"
+                        required
+                    />
+                    <span id="nameError" class="text-danger"></span>
+                </div>
+
+                <!-- Image URL Field -->
+                <div class="form-group">
+                    <label for="editImage">Image URL</label>
+                    <input
+                        type="url"
+                        id="editImage"
+                        placeholder="Enter image URL"
+                        required
+                    />
+                    <span id="imageError" class="text-danger"></span>
+                    <div id="imagePreviewContainer">
+                        <img
+                            id="imagePreview"
+                            src=""
+                            alt="Image preview"
+                            style="
+                                display: none;
+                                width: 100%;
+                                max-height: 200px;
+                                object-fit: cover;
+                            "
+                        />
+                    </div>
+                </div>
+
+                <!-- Price Field -->
+                <div class="form-group">
+                    <label for="editPrice">Price ($)</label>
+                    <input
+                        type="number"
+                        id="editPrice"
+                        placeholder="Enter price"
+                        min="1"
+                        step="0.01"
+                        required
+                    />
+                    <span id="priceError" class="text-danger"></span>
+                </div>
+
+                <!-- Category Field -->
+                <div class="form-group">
+                    <label for="editCategory">Category</label>
+                    <select id="editCategory" required>
+                        <option value="" disabled selected>
+                            Select category
+                        </option>
+                        <option value="Juices">Juices</option>
+                        <option value="Soft Drinks">Soft Drinks</option>
+                        <option value="Tea">Tea</option>
+                        <option value="Coffee">Coffee</option>
+                        <option value="Mocktails">Mocktails</option>
+                        <option value="Energy Drink">Energy Drink</option>
+                    </select>
+                    <span id="categoryError" class="text-danger"></span>
+                </div>
+
+                <!-- Description Field -->
+                <div class="form-group">
+                    <label for="editDescription">Description</label>
+                    <textarea
+                        id="editDescription"
+                        placeholder="Enter description"
+                        required
+                    ></textarea>
+                    <span id="descriptionError" class="text-danger"></span>
+                </div>
+
+                <!-- Rating Field -->
+                <div class="form-group">
+                    <label for="editRating">Rating</label>
+                    <input
+                        type="number"
+                        id="editRating"
+                        placeholder="Enter rating (1-5)"
+                        min="1"
+                        max="5"
+                        required
+                    />
+                    <span id="ratingError" class="text-danger"></span>
+                </div>
+
+                <!-- Quantity Field -->
+                <div class="form-group">
+                    <label for="editQuantity">Quantity</label>
+                    <input
+                        type="number"
+                        id="editQuantity"
+                        placeholder="Enter quantity"
+                        min="1"
+                        max="1000"
+                        required
+                    />
+                    <span id="quantityError" class="text-danger"></span>
+                </div>
+
+                <!-- Update Button -->
+                <div class="button-container">
+                    <button type="button" class="update-btn" id="updateButton">
+                        Update Beverage
+                    </button>
+                </div>
+            </form>
+
+            <!-- General Error/Success Message -->
+            <p id="editMessage" aria-live="polite"></p>
+        </div>
+
+        <!-- Link to the separated JavaScript file -->
+        <script src="./js/update_beverage.js"></script>
+        <script src="./js/back.js"></script>
+    </body>
+</html>
