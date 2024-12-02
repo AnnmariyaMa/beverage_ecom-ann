@@ -16,7 +16,9 @@ app.post("/add-beverage", addbeverage);
 app.put("/edit-beverage/:id", editbeverage);
 app.get('/view-beverage', viewBeverage);
 app.get('/search-beverage', searchbeverage);
-
+app.get('/',(req,res)=>{
+    res.sendFile(__dirname + "/instrumented/"+startPage);
+})
 
 
 server = app.listen(PORT, function () {
@@ -27,3 +29,4 @@ server = app.listen(PORT, function () {
     console.log(`Demo project at: ${baseUrl}`);
 });
 module.exports = { app, server };
+// 

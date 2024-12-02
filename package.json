@@ -1,12 +1,12 @@
 {
-  "name": "beverage_ecom",
+  "name": "resource-mgmt",
   "version": "1.0.0",
-  "description": "This is a beverage e-commerce project",
+  "description": "This is a reference project for the DVOPS subject.",
   "main": "index.js",
   "scripts": {
     "backend-test": "nyc --nycrc-path .nycrc-backend mocha",
     "frontend-instrument": "xcopy public instrumented /I /E /Y & nyc instrument public instrumented",
-    "frontend-test": "rmdir -r .nyc_output & nyc --nycrc-path .nycrc-frontend cypress run"
+"frontend-test": "rmdir -r .nyc_output & nyc --nycrc-path .nycrc-frontend cypress run"
   },
   "keywords": [],
   "author": "",
@@ -21,8 +21,7 @@
     "fs": "^0.0.1-security",
     "mocha": "^10.8.2",
     "nyc": "^17.1.0"
-  },
-  "devDependencies": {
-    "sinon": "^19.0.2"
+   
+
   }
 }
