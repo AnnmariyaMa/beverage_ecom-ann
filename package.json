@@ -10,9 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@cypress/code-coverage": "^3.13.9",
     "body-parser": "^1.20.3",
     "chai": "^4.3.4",
     "chai-http": "^4.3.0",
+    "cypress": "^13.17.0",
     "express": "^4.21.1",
     "fs": "^0.0.1-security",
     "mocha": "^10.8.2",
