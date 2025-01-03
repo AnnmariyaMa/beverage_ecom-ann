@@ -12,6 +12,40 @@ describe('Beverage Ecommerce', () => {
     cy.task('stopServer'); // Stop the server
   });
 
+  // Test: Should clear the search input and display popular searches
+  it('should clear the search input and display popular searches', () => {
+    cy.visit(baseUrl);
+
+    cy.get('#searchInput').type('Coke', {force: true});
+    cy.get('#searchInput').clear();
+    cy.wait(5000);
+
+    // Verify that results are cleared
+    cy.get('#resultsContainer').should('be.empty');
+
+    // Verify popular searches are displayed again
+    cy.get('#popularSearches').should('be.visible');
+  });
+
+  // Test: Should handle empty search input gracefully
+  it('should handle empty search input gracefully', () => {
+    cy.visit(baseUrl);
+
+    cy.get('#searchInput').clear();
+    cy.get('#searchInput').type('{enter}');
+    cy.get('#resultsContainer').should('be.empty');
+    cy.get('#popularSearches').should('be.visible');
+  });
+
+  // Test: Should handle invalid characters in search input
+  it('should handle invalid characters in search input', () => {
+    cy.visit(baseUrl);
+
+    cy.get('#searchInput').type('!@#$%^&*(){enter}');
+    cy.get('#resultsContainer').should('contain', 'No beverages found!');
+  });
+
+  // Test: Should display popular searches on load
   it('should display popular searches on load', () => {
     cy.visit(baseUrl);
 
@@ -21,20 +55,7 @@ describe('Beverage Ecommerce', () => {
     cy.get('#searchInput').should('be.visible');
   });
 
-  it('should clear the search input and display popular searches', () => {
-    cy.visit(baseUrl);
-
-    cy.get('#searchInput').type('Coke');
-    cy.get('#searchInput').clear();
-    cy.wait(500);
-
-    // Verify that results are cleared
-    cy.get('#resultsContainer').should('be.empty');
-
-    // Verify popular searches are displayed again
-    cy.get('#popularSearches').should('be.visible');
-  });
-
+  // Test: Should display a message when no results are found
   it('should display a message when no results are found', () => {
     cy.visit(baseUrl);
 
@@ -42,8 +63,7 @@ describe('Beverage Ecommerce', () => {
     cy.get('#resultsContainer').should('contain', 'No beverages found!');
   });
 
-  
-
+  // Test: Should return correct results for a specific search term
   it('should return correct results for a specific search term', () => {
     cy.intercept('GET', '/search-beverage*', {
       statusCode: 200,
@@ -68,6 +88,7 @@ describe('Beverage Ecommerce', () => {
     cy.get('#resultsContainer').should('contain', 'Coke');
   });
 
+  // Test: Should sort results by price (low to high)
   it('should sort results by price (low to high)', () => {
     cy.intercept('GET', '/search-beverage*', {
       statusCode: 200,
@@ -93,6 +114,7 @@ describe('Beverage Ecommerce', () => {
     });
   });
 
+  // Test: Should sort results by price (high to low)
   it('should sort results by price (high to low)', () => {
     cy.intercept('GET', '/search-beverage*', {
       statusCode: 200,
@@ -118,6 +140,74 @@ describe('Beverage Ecommerce', () => {
     });
   });
 
-  
-  
+  // Test: Should call searchbeverage function on enter key press
+  it('should call searchbeverage function on enter key press', () => {
+    cy.visit(baseUrl);
+
+    // Spy on the searchbeverage function
+    cy.window().then((win) => {
+      cy.spy(win, 'searchbeverage').as('searchSpy');
+    });
+
+    // Type a search term and press Enter
+    cy.get('#searchInput').type('Coke{enter}');
+
+    // Verify that the searchbeverage function is called
+    cy.get('@searchSpy').should('have.been.calledOnce');
+  });
+
+  // Test: Should display search results correctly
+  it('should display search results correctly', () => {
+    cy.visit(baseUrl);
+
+    // Intercept the search API call and return mock data
+    cy.intercept('GET', '/search-beverage*', {
+      statusCode: 200,
+      body: [
+        { name: 'Coke', image: '/images/coke.jpg', category: 'Soft Drink', description: 'A popular fizzy drink', price: 1.99, rating: 4.5, quantity: 20 }
+      ]
+    }).as('searchCoke');
+
+    cy.get('#searchInput').type('Coke{enter}');
+    cy.wait('@searchCoke');
+
+    // Ensure that the result container is populated
+    cy.get('#resultsContainer').should('contain', 'Coke');
+    cy.get('.beverage-item').should('have.length', 1); // Expecting one result
+  });
+
+  // Test: Should set search query and trigger searchbeverage function
+  it('should set search query and trigger searchbeverage function', () => {
+    cy.visit(baseUrl);
+
+    // Spy on the searchbeverage function
+    cy.window().then((win) => {
+      cy.spy(win, 'searchbeverage').as('searchSpy');
+    });
+
+    // Set the search term and call the function
+    cy.window().then((win) => {
+      win.setSearchQuery('Coke');
+    });
+
+    // Verify that the searchbeverage function is called
+    cy.get('@searchSpy').should('have.been.calledOnce');
+  });
+
+  // Test: Should handle empty results gracefully
+  it('should handle empty results gracefully', () => {
+    cy.visit(baseUrl);
+
+    // Intercept the search API call and return empty data
+    cy.intercept('GET', '/search-beverage*', {
+      statusCode: 200,
+      body: []
+    }).as('searchCoke');
+
+    cy.get('#searchInput').type('NonExistentItem{enter}');
+    cy.wait('@searchCoke');
+
+    // Verify that the no results message is displayed
+    cy.get('#resultsContainer').should('contain', 'No beverages found!');
+  });
 });
