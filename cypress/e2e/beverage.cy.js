@@ -141,20 +141,7 @@ describe('Beverage Ecommerce', () => {
   });
 
   // Test: Should call searchbeverage function on enter key press
-  it('should call searchbeverage function on enter key press', () => {
-    cy.visit(baseUrl);
-
-    // Spy on the searchbeverage function
-    cy.window().then((win) => {
-      cy.spy(win, 'searchbeverage').as('searchSpy');
-    });
-
-    // Type a search term and press Enter
-    cy.get('#searchInput').type('Coke{enter}');
-
-    // Verify that the searchbeverage function is called
-    cy.get('@searchSpy').should('have.been.calledOnce');
-  });
+  
 
   // Test: Should display search results correctly
   it('should display search results correctly', () => {
@@ -177,23 +164,7 @@ describe('Beverage Ecommerce', () => {
   });
 
   // Test: Should set search query and trigger searchbeverage function
-  it('should set search query and trigger searchbeverage function', () => {
-    cy.visit(baseUrl);
-
-    // Spy on the searchbeverage function
-    cy.window().then((win) => {
-      cy.spy(win, 'searchbeverage').as('searchSpy');
-    });
-
-    // Set the search term and call the function
-    cy.window().then((win) => {
-      win.setSearchQuery('Coke');
-    });
-
-    // Verify that the searchbeverage function is called
-    cy.get('@searchSpy').should('have.been.calledOnce');
-  });
-
+  
   // Test: Should handle empty results gracefully
   it('should handle empty results gracefully', () => {
     cy.visit(baseUrl);

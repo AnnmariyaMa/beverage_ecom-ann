@@ -34,9 +34,9 @@ function searchbeverage() {
         }
     };
 
-    request.onerror = function () {
-        document.getElementById("resultsContainer").innerHTML = "<p>Error occurred. Please try again.</p>";
-    };
+    // request.onerror = function () {
+    //     document.getElementById("resultsContainer").innerHTML = "<p>Error occurred. Please try again.</p>";
+    // };
 
     request.send();
 }
