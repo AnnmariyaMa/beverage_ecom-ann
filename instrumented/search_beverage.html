@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search - Beverages</title>
+    <style>
+        /* General Styles */
+        
+        body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-image: url('images/pexels-george-desipris-1028637.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        color: #318a21;
+    }
+        
+        /* Header Styles */
+        .header {
+            padding: 15px;
+            background-color: #446990;
+            color: white;
+            display: flex;
+            align-items: center;
+        }
+        
+        .header input[type="text"] {
+            margin-left: 15px;
+            padding: 10px;
+            border: none;
+            border-radius: 25px;
+            width: 80%;
+        }
+
+        /* Popular Searches Section */
+        .popular-section {
+            padding: 20px;
+        }
+
+        .section-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+            margin-top: 20px;
+        }
+
+        .keyword-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .keyword {
+            padding: 10px 15px;
+            border-radius: 20px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+
+        /* Back Button */
+        .back-button {
+            color: white;
+            font-size: 1.5em;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        /* Results Section */
+        #resultsContainer {
+            padding: 20px;
+        }
+
+        .beverage-item {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            background-color: white;
+        }
+
+        .beverage-item img {
+            max-width: 100px;
+            max-height: 100px;
+            object-fit: cover;
+        }
+
+        .beverage-item h3 {
+            font-size: 1.5em;
+            margin: 0;
+        }
+
+        .beverage-item p {
+            font-size: 1em;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header with Search Bar -->
+    <div class="header">
+        <a href="index.html" class="back-button">&#8592;</a> <!-- Back arrow symbol -->
+        
+        <input type="text" id="searchInput" placeholder="Search for Beverages" oninput="searchbeverage()">
+    </div>
+    <!-- Sort by Price Dropdown -->
+<div class="sort-section">
+    <label for="sortDropdown">Sort by:</label>
+    <select id="sortDropdown" onchange="sortResultsByPrice()">
+        <option value="default">Default</option>
+        <option value="low-to-high">Price: Low to High</option>
+        <option value="high-to-low">Price: High to Low</option>
+    </select>
+</div>
+
+
+<!-- Popular Searches Section -->
+<div id="popularSearches" class="popular-section">
+    <div class="section-title">Popular searches</div>
+    <div class="keyword-container">
+        <span class="keyword" onclick="setSearchQuery('coke')">coke</span>
+        <span class="keyword" onclick="setSearchQuery('ice tea')">ice tea</span>
+        <span class="keyword" onclick="setSearchQuery('Bombay Sapphire')">Bombay Sapphire</span>
+        <span class="keyword" onclick="setSearchQuery('Dasani water bottle')">Dasani water bottle</span>
+        <span class="keyword" onclick="setSearchQuery('Mojito')">Mojito</span>
+    </div>
+</div>
+
+
+    <!-- Search Results Section -->
+    <div id="resultsContainer"></div>
+
+    <script src="js/search_beverage.js"></script>
+</body>
+</html>

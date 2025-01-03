@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="./css/styles.css" />
+        <title>Beverage List</title>
+    </head>
+    <body>
+        <header>
+            <h1 class="logo">Fizzies</h1>
+        </header>
+
+        <!-- Button to open add beverage modal -->
+        
+        <button class="search-btn button" onclick="window.location.href='search_beverage.html'">Search</button>
+        <a href="add-beverage.html" class="open-modal-btn">Add Beverage</a>
+
+        <!-- Container for Beverage Cards -->
+        <div class="card-container"></div>
+
+        <!-- Scripts for adding and editing beverages -->
+
+        <script src="./js/addbeverage.js"></script>
+        <script src="./js/update_beverage.js"></script>
+        <script src="./js/search_beverage.js"></script>
+
+
+        <script>
+            function viewBeverage() {
+                const request = new XMLHttpRequest();
+                request.open("GET", "/view-beverage", true);
+                request.setRequestHeader("Content-Type", "application/json");
+
+                request.onload = function () {
+                    const response = JSON.parse(request.responseText);
+                    let html = "";
+
+                    response.forEach((beverage) => {
+                        html += `
+                    <div class="card">
+                        <h2 class="card-title">${beverage.name}</h2>
+                        <img src="${
+                            beverage.image 
+                        }" alt="Beverage Image" class="card-image">
+                        <p class="card-description">${beverage.description}</p>
+                        <p class="card-price">Price: $${beverage.price}</p>
+                        <p class="card-category">Category: ${
+                            beverage.category
+                        }</p>
+                        <p class="card-quantity">Quantity: ${
+                            beverage.quantity
+                        }</p>
+                        <div class="card-rating">Rating: ${
+                            beverage.rating
+                        }</div>
+                        <button class="edit-btn" onclick='gotoUpdate(${JSON.stringify(
+                            beverage
+                        )})'>Update</button>
+                    </div>
+                    `;
+                    });
+
+                    document.querySelector(".card-container").innerHTML = html;
+                };
+
+                request.onerror = function () {
+                    console.error("Error loading beverages");
+                };
+
+                request.send();
+            }
+
+            function gotoUpdate(beverageData) {
+                sessionStorage.setItem(
+                    "selectedBeverage",
+                    JSON.stringify(beverageData)
+                );
+                window.location.href = "update_beverage.html";
+            }
+
+            document.addEventListener("DOMContentLoaded", viewBeverage);
+        </script>
+    </body>
+</html>
